@@ -1,0 +1,43 @@
+# =============================================================================
+# Minore Vercel Deployment — Environment Variables
+# =============================================================================
+# Set these in Vercel Dashboard → Project Settings → Environment Variables.
+# For local development, copy to .env files in respective directories.
+# =============================================================================
+
+# === DATABASE (Neon PostgreSQL) =============================================
+# Required: PostgreSQL connection string with pooled connection for serverless.
+# Get from Neon Dashboard → Connection Details → Connection string (Pooled)
+DATABASE_URL=postgresql://user:password@ep-xxxx-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
+
+# === AUTH / JWT =============================================================
+# Required for production: Generate with: openssl rand -hex 32
+# Must be at least 32 characters.
+JWT_SECRET_KEY=your-64-char-hex-string-generated-with-openssl-rand-hex-32
+
+# === SERVER ==================================================================
+ENVIRONMENT=production
+
+# === CORS ====================================================================
+# Add your Vercel deployment domain here
+CORS_ORIGINS=https://your-project.vercel.app,http://localhost:5173
+CORS_ALLOW_CREDENTIALS=true
+
+# === SECURITY ================================================================
+ALLOWED_HOSTS=.vercel.app,localhost
+DOCS_ENABLED=false
+HSTS_ENABLED=true
+HSTS_MAX_AGE=31536000
+HSTS_INCLUDE_SUBDOMAINS=true
+HSTS_PRELOAD=true
+
+# Rate limiting disabled on Vercel (in-memory limiter resets per cold start)
+RATE_LIMIT_PER_MINUTE=0
+
+# Request/payload size limits
+MAX_REQUEST_SIZE=10485760
+MAX_UPLOAD_SIZE=5242880
+MAX_PAGE_SIZE=1000
+
+# === FRONTEND (set in Vercel, not needed in code) ===========================
+# VITE_API_URL=/api/v1
