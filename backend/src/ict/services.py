@@ -7,6 +7,7 @@ from sqlalchemy import desc
 from uuid import UUID
 
 from .schemas import (
+    StructureResult,
     OHLCBar, ICTAnalysisRequest, ICTAnalysisResponse,
     StructureAnalysis, FVGAnalysis, OrderBlockAnalysis,
     LiquidityAnalysis, SessionAnalysis, ICTModelResult,
