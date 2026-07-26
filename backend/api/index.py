@@ -11,9 +11,10 @@ from pathlib import Path
 # Set Vercel environment flag
 os.environ["VERCEL"] = "1"
 
-# Calculate paths relative to this file (api/index.py)
+# Calculate paths relative to this file (backend/api/index.py)
 current_dir = Path(__file__).resolve().parent  # api/
 backend_dir = current_dir.parent  # backend/
+repo_root = backend_dir.parent  # repo root
 src_path = backend_dir / "src"
 
 # Add backend/src to Python path
