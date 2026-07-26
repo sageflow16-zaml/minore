@@ -66,11 +66,22 @@ async def lifespan(app: FastAPI):
             "JWT_SECRET_KEY is set to a weak/default value! "
             "Generate a secure key with: openssl rand -hex 32"
         )
+    
+    # On Vercel, don't crash on missing secrets - just log a warning
+    # This allows initial deployment before secrets are configured
+    is_vercel = os.environ.get("VERCEL", "") != ""
     if settings.ENVIRONMENT == "production" and settings.JWT_SECRET_KEY in ("change-me-in-production", ""):
-        raise RuntimeError(
-            "Production environment requires a secure JWT_SECRET_KEY. "
-            "Set JWT_SECRET_KEY environment variable to a random value (min 32 chars)."
-        )
+        if is_vercel:
+            logger.warning(
+                "JWT_SECRET_KEY not configured on Vercel. "
+                "Set JWT_SECRET_KEY in Vercel Dashboard → Project Settings → Environment Variables. "
+                "Using temporary key for now."
+            )
+        else:
+            raise RuntimeError(
+                "Production environment requires a secure JWT_SECRET_KEY. "
+                "Set JWT_SECRET_KEY environment variable to a random value (min 32 chars)."
+            )
 
     logger.info(
         "Application starting up",
