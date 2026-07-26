@@ -4,13 +4,8 @@
   "installCommand": null,
   "devCommand": "python -m uvicorn src.main:app --reload",
   "routes": [
-    { "src": "/(.*)", "dest": "/index.py" }
+    { "src": "/(.*)", "dest": "/api/index.py" }
   ],
-  "functions": {
-    "index.py": {
-      "maxDuration": 60
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",

@@ -14,11 +14,11 @@ The backend is configured for Vercel Python runtime with:
 | Framework | `None` (Python runtime) |
 | Install Command | Default (`pip install -r requirements.txt`) |
 | Build Command | None (Python is interpreted) |
-| Handler | `index.py` |
+| Handler | `api/index.py` |
 
 ## Required Files
 
-- `backend/index.py` - Vercel serverless handler
+- `backend/api/index.py` - Vercel serverless function entry point
 - `backend/vercel.json` - Vercel configuration
 - `backend/requirements.txt` - Python dependencies
 - `backend/runtime.txt` - Python version (`python-3.12.0`)
@@ -102,7 +102,7 @@ Set `VITE_API_URL` in the frontend's Vercel project environment variables.
 ### Import Errors
 
 If you see import errors, ensure:
-- `backend/index.py` sets up the Python path correctly
+- `backend/api/index.py` sets up the Python path correctly
 - `backend/src/` is in the Python path
 
 ### Database Connection Issues
