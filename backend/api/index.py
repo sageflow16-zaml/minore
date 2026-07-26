@@ -12,8 +12,6 @@ from pathlib import Path
 os.environ["VERCEL"] = "1"
 
 # Calculate paths relative to this file (api/index.py)
-# Backend source is at: <root>/backend/src
-# This file is at: <root>/backend/api/index.py
 current_dir = Path(__file__).resolve().parent  # api/
 backend_dir = current_dir.parent  # backend/
 src_path = backend_dir / "src"
@@ -22,13 +20,10 @@ src_path = backend_dir / "src"
 if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
-# Copy VERSION file to backend directory if it doesn't exist
-# (needed by src/main.py to read app version)
+# Set APP_VERSION environment variable from backend/VERSION if available
 version_file = backend_dir / "VERSION"
-if not version_file.exists():
-    parent_version = backend_dir.parent / "VERSION"
-    if parent_version.exists():
-        version_file.write_text(parent_version.read_text())
+if version_file.exists() and "APP_VERSION" not in os.environ:
+    os.environ["APP_VERSION"] = version_file.read_text().strip()
 
 # Import the FastAPI application
 from src.main import app

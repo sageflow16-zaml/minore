@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
+import os
 import time
 import warnings
 
@@ -47,9 +48,14 @@ from src.core.metrics import MetricsMiddleware, metrics_endpoint
 
 logger = get_logger(__name__)
 
-# Read version from VERSION file at project root
-_version_path = Path(__file__).resolve().parent.parent.parent / "VERSION"
-APP_VERSION = _version_path.read_text().strip() if _version_path.exists() else "0.0.0"
+# Read version from VERSION file
+# Check multiple locations for Vercel compatibility
+_version_path = Path(__file__).resolve().parent.parent.parent / "VERSION"  # Original: repo root
+_backend_version_path = Path(__file__).resolve().parent.parent / "VERSION"  # Alternative: backend dir
+APP_VERSION = os.environ.get("APP_VERSION") or (
+    _version_path.read_text().strip() if _version_path.exists()
+    else (_backend_version_path.read_text().strip() if _backend_version_path.exists() else "0.0.0")
+)
 
 
 @asynccontextmanager
